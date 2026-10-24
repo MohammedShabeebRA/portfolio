@@ -315,7 +315,7 @@ strong { font-weight: 600; color: var(--text); }
 .ty { color: #5eead4; }
 .str { color: #fcd34d; }
 .num { color: #fb923c; }
-.cm { color: #64748b; font-style: italic; }
+.cm { color: #94a3b8; font-style: italic; }
 
 /* ---------- Sections ---------- */
 .section { padding: clamp(64px, 8vw, 110px) 0; }
