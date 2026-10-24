@@ -72,7 +72,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261024a" />
+  <link rel="stylesheet" href="styles.css?v=20261024b" />
   <script>
     // Apply saved theme before paint to avoid a flash.
     (function () {
@@ -114,6 +114,7 @@
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#experience">Experience</a></li>
+          <li><a href="#cases">Case studies</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#education">Education</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -416,11 +417,177 @@
       </div>
     </section>
 
+    <!-- ============ CASE STUDIES ============ -->
+    <section id="cases" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">04 · Case studies</p>
+          <h2>Three pieces of work, end to end</h2>
+          <p class="section-lede">Context, problem, what I did, why I did it that way, how it was checked and what came out. Every statement traces to a tracked work item or a dated status note.</p>
+        </div>
+
+        <details class="case reveal" id="case-lesson-plan">
+          <summary>
+            <span class="case-index">01</span>
+            <span class="case-title">
+              <h3>Lesson Plan module — from a flat form to an approval workflow</h3>
+              <span class="case-outcome">70 work items · Oct 2025 – Jul 2026 · live with teacher scoping, approvals, signed reports and per-school settings</span>
+            </span>
+            <span class="case-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="case-body">
+            <div class="case-part">
+              <h4>Context</h4>
+              <p>Teachers plan lessons per class, subject and topic; heads of section review them; parents see approved plans in the portal and app. A simple Lesson Plan screen had existed since the 2022 build-out, but it was a flat entry with no review step.</p>
+            </div>
+            <div class="case-part">
+              <h4>Problem</h4>
+              <p>Schools wanted lesson plans to be a governed document: submitted by the teacher, approved by a head, printable with the approver’s signature, and hidden from others until approved. The old screen showed every subject to every teacher, had no draft state, no history and no notifications, and long content failed to save.</p>
+            </div>
+            <div class="case-part wide">
+              <h4>My contribution</h4>
+              <ul>
+                <li>Designed the approval workflow — Draft, Submitted, Approved or Action Required — with a workflow log, step comments and e-mail notifications on approval, return and resubmission.</li>
+                <li>Scoped the screen to the logged-in teacher: teacher auto-filled from the login, subjects and sections filtered through the class-subject and class-teacher mappings.</li>
+                <li>Restructured the content into chapters, topics, objectives and outcomes, with a skill-development list maintained by the heads.</li>
+                <li>Added post-reflection fields that unlock only after approval, cloning that resets state and comments, sequence numbers, date ranges and cross-campus class mapping.</li>
+                <li>Built the printable report with approver signature and date, and client-specific settings to enable or hide tabs per school.</li>
+                <li>Fixed the data-layer limits that broke long text in content fields.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Technical choices</h4>
+              <ul>
+                <li>Reused the ERP’s workflow engine and e-mail templates instead of a bespoke state machine, so lesson plans behave like every other approval in the product.</li>
+                <li>Enforced teacher scoping in the query layer via the existing mappings, not in the UI, so the parent portal and reports inherit the same rules.</li>
+                <li>Kept per-school differences in a settings table so one codebase serves every tenant.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Validation</h4>
+              <p>A structured live-testing round with a school produced a consolidated feedback item and 39 tracked bugs between December 2025 and July 2026, each retested by QA. Workflow e-mails were re-verified after a regression.</p>
+            </div>
+            <div class="case-part">
+              <h4>Outcome</h4>
+              <p>The module is live with the approval workflow, teacher scoping, printable approved plans and per-school configuration, and is now the pattern for other approval-based features.</p>
+            </div>
+            <div class="case-part">
+              <h4>Evidence</h4>
+              <p>70 Azure DevOps work items (31 tasks, 39 bugs) spanning October 2025 to July 2026. No product screenshots are shown here; the workflow and data model are described rather than pictured.</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-performance">
+          <summary>
+            <span class="case-index">02</span>
+            <span class="case-title">
+              <h3>Database and page performance in a multi-tenant ERP</h3>
+              <span class="case-outcome">Two documented passes, 2023 and 2025 · slow screens closed, repeated lookups removed, attachments moved out of the transactional database</span>
+            </span>
+            <span class="case-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="case-body">
+            <div class="case-part">
+              <h4>Context</h4>
+              <p>Each school group runs on its own SQL Server database that accumulates years of fee, attendance, payroll and document data. The ERP, parent portal and mobile apps all read from it, and attachments were stored inside the same database.</p>
+            </div>
+            <div class="case-part">
+              <h4>Problem</h4>
+              <p>In October 2023 the Student, Student Application and Employee edit screens and the Staff Attendance screen had become too slow on the largest tenants, and large uploads timed out before users saw a result. In July 2025 user claims were being fetched on every page, the activity stream listed everything unfiltered and notification counts were recomputed on each request.</p>
+            </div>
+            <div class="case-part wide">
+              <h4>My contribution</h4>
+              <ul>
+                <li>Rewrote the slow queries and stored procedures behind the edit screens and attendance listing and fixed indexing on the large tenant tables.</li>
+                <li>Ran the 2025 performance pass: removed the repeated claims call from login, school selection and home; filtered the activity stream; fixed the staff-attendance query; cached notification counts.</li>
+                <li>Introduced data retention: inventoried table sizes, moved attachment content to a separate content database with compression on save, and set a two-year online window for transaction rows.</li>
+                <li>Added server-side file caching for the parent portal and apps, compressed gallery and chat images on save, and scheduled temp-folder cleanup on the database server.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Technical choices</h4>
+              <ul>
+                <li>Measure first: the table-size inventory decided what to move or archive before any code changed.</li>
+                <li>Fix the query shape before adding caches; cache only data read on every request that changes rarely.</li>
+                <li>Move binary content out of the OLTP database rather than tuning around it, so backups, restores and index maintenance shrink too.</li>
+                <li>Retention as a scheduled job with an archive, not a one-off delete.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Validation</h4>
+              <p>The 2023 slow-screen bugs were retested by QA on the affected tenants and closed. The 2025 items were tracked one by one in the daily status notes until each listing behaved correctly.</p>
+            </div>
+            <div class="case-part">
+              <h4>Outcome</h4>
+              <p>Edit and attendance screens returned to acceptable speed on the largest tenants; login and home stopped re-fetching claims; attachments now live outside the transactional database and transaction tables hold two years online.</p>
+            </div>
+            <div class="case-part">
+              <h4>Evidence</h4>
+              <p>Dated work items for each slow screen, the retention tasks and the caching work, plus the July 2025 status notes. Query changes are described in general terms; no client data or internal schemas are shown.</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-migration">
+          <summary>
+            <span class="case-index">03</span>
+            <span class="case-title">
+              <h3>Migrating the ERP, parent portal and API from .NET Framework 4.8 to .NET 8</h3>
+              <span class="case-outcome">88 tagged regressions, Dec 2023 – Feb 2024 · staging and live re-published on .NET 8; every module since built on the new stack</span>
+            </span>
+            <span class="case-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="case-body">
+            <div class="case-part">
+              <h4>Context</h4>
+              <p>The ERP, parent portal and shared API were built on .NET Framework 4.8 with ASP.NET MVC, Web API, Entity Framework 6 and AngularJS front-ends on IIS. In late 2023 the platform moved to .NET 8 for long-term support, performance and hosting flexibility.</p>
+            </div>
+            <div class="case-part">
+              <h4>Problem</h4>
+              <p>A large multi-module monolith had to keep serving live schools while being ported. The hard parts were where the frameworks differ: request pipeline and sessions, authentication and claims, entity model generation, file upload and download, SSRS report rendering, the payment gateway and mail, and a front-end bundling step the old framework had provided.</p>
+            </div>
+            <div class="case-part wide">
+              <h4>My contribution</h4>
+              <ul>
+                <li>Worked the migration fix queue daily from December 2023 to February 2024: 88 regressions tagged for the migration, 85 closed, across canteen orders and invoices, salary slips, parent-portal login, fee payment and mail, credit notes and concessions, fee due generation and refunds, timesheets, OTP, exports and slow uploads.</li>
+                <li>Converted reports for the new report server and set up the staging and live report servers.</li>
+                <li>Published the .NET 8 builds of the ERP, parent portal and API to staging and then live.</li>
+                <li>Added a front-end bundling step for the ERP’s JavaScript and CSS, and regenerated entity models for the new data layer.</li>
+                <li>Built later modules directly on .NET 8: the Report Builder with an embedded RDL viewer, Data Studio, Lesson Plans and the academy scheduler.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Technical choices</h4>
+              <ul>
+                <li>Incremental, module-by-module porting with a parallel staging environment and its own report server rather than a single cut-over.</li>
+                <li>Kept the AngularJS front-ends and ported the controllers and services behind them, limiting the change surface.</li>
+                <li>Regression intake through a dedicated DevOps tag so migration defects were triaged apart from normal support.</li>
+                <li>Generated Entity Framework Core models from the database instead of hand-porting the EF6 classes.</li>
+              </ul>
+            </div>
+            <div class="case-part">
+              <h4>Validation</h4>
+              <p>Every migrated module went through staging publish, QA and the tagged regression queue. Live payments were re-verified against the gateway’s staging endpoint before go-live.</p>
+            </div>
+            <div class="case-part">
+              <h4>Outcome</h4>
+              <p>The ERP, parent portal and API were live on .NET 8 by early February 2024, and all product work since has been on the new stack.</p>
+            </div>
+            <div class="case-part">
+              <h4>Evidence</h4>
+              <p>The 88-item regression count and its date range in Azure DevOps, dated publish notes, and the modules built on the new runtime afterwards. Architecture is described generically; no internal code or URLs are shown.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <!-- ============ PROJECTS ============ -->
     <section id="projects" class="section section-alt">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">04 · Projects</p>
+          <p class="section-kicker">05 · Projects</p>
           <h2>Selected work</h2>
           <p class="section-lede">Production systems I’ve designed, built or significantly extended, grouped by what they do. All of the Eduegate work is live and in daily use.</p>
         </div>
@@ -484,6 +651,7 @@
               <li>Cloning across classes and campuses, sequence numbering, client-specific tab settings and teacher-scoped views.</li>
             </ul>
             <ul class="tags"><li>ASP.NET Core</li><li>Workflow</li><li>AngularJS</li><li>SSRS</li><li>SQL Server</li></ul>
+                      <a class="card-link" href="#case-lesson-plan">Read the case study <span aria-hidden="true">→</span></a>
           </article>
 
           <article class="project-card reveal">
@@ -594,6 +762,7 @@
               <li>Automated builds and deployments through Azure DevOps.</li>
             </ul>
             <ul class="tags"><li>.NET 8</li><li>ASP.NET Core</li><li>Microservices</li><li>CI/CD</li></ul>
+                      <a class="card-link" href="#case-migration">Read the case study <span aria-hidden="true">→</span></a>
           </article>
         </div>
 
@@ -652,6 +821,7 @@
               <li>Direct login for employees mapped to a single school; department-wise student access without exposing other data.</li>
             </ul>
             <ul class="tags"><li>ASP.NET Core</li><li>Caching</li><li>T-SQL</li><li>Claims auth</li></ul>
+                      <a class="card-link" href="#case-performance">Read the case study <span aria-hidden="true">→</span></a>
           </article>
         </div>
 
@@ -675,7 +845,7 @@
     <section id="education" class="section">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">05 · Education</p>
+          <p class="section-kicker">06 · Education</p>
           <h2>Academic background</h2>
         </div>
         <div class="edu-grid">
@@ -715,7 +885,7 @@
       <div class="container">
         <div class="contact-card reveal">
           <div>
-            <p class="section-kicker">06 · Contact</p>
+            <p class="section-kicker">07 · Contact</p>
             <h2>Let’s build something reliable</h2>
             <p class="section-lede">
               Open to Software Engineer and full-stack .NET roles, as well as freelance API, database and reporting work.
@@ -759,6 +929,6 @@
   <button class="to-top" type="button" aria-label="Back to top" title="Back to top">
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </button>
-  <script src="script.js?v=20261024a" defer></script>
+  <script src="script.js?v=20261024b" defer></script>
 </body>
 </html>

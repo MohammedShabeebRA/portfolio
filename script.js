@@ -420,3 +420,22 @@
     if (target.focus) setTimeout(function () { target.focus({ preventScroll: true }); }, reduce ? 0 : 500);
   });
 })();
+
+/* Case studies: open the targeted study when a "Read the case study" link or a #case-… hash is followed. */
+(function () {
+  'use strict';
+  function openFromHash() {
+    var id = (location.hash || '').replace('#', '');
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS' && !el.open) el.open = true;
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+  Array.prototype.forEach.call(document.querySelectorAll('a.card-link[href^="#case-"]'), function (a) {
+    a.addEventListener('click', function () {
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    });
+  });
+})();
