@@ -44,7 +44,7 @@ Then visit <http://localhost:8080>.
 
 ## Before you publish
 
-1. Replace every `https://YOUR-DOMAIN.example` with your real site URL. It appears in `index.html`, `light/index.html`, `sitemap.xml` and `robots.txt` (canonical link, Open Graph URL and image, JSON-LD).
+1. The site URL is set to `https://mohammedshabeebra.github.io/portfolio` in `index.html`, `light/index.html`, `sitemap.xml` and `robots.txt` (canonical link, Open Graph URL and image, JSON-LD). If you move to a custom domain, find-and-replace that address.
 2. The social preview image is `assets/og-image.png` (1200 × 630). Regenerate it if you change your name, title or photo.
 3. Favicons live in `assets/` (`favicon.svg`, `favicon-32.png`, `favicon.ico`, `apple-touch-icon.png`, `icon-512.png`).
 
