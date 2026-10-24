@@ -11,7 +11,9 @@ Portfolio/
 ├── script.js                  # Theme toggle, mobile nav, scroll effects, animations
 ├── assets/
 │   ├── Mohammed-Shabeeb-RA-CV.pdf   # Linked from the "Download CV" buttons
-│   └── profile.jpg                  # Hero portrait
+│   ├── profile.jpg                  # Source portrait (used by the preview image)
+│   ├── profile-256.webp / .jpg      # Hero portrait at display size
+│   └── fonts/                       # Self-hosted variable fonts (latin subsets)
 └── light/                     # Light edition: same content, different design
     ├── index.html             # Points at ../assets/
     ├── styles.css             # Clean teal design, top navigation
