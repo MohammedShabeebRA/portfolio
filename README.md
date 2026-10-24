@@ -52,7 +52,7 @@ Then visit <http://localhost:8080>.
 
 Any static host works. Two quick options:
 
-**GitHub Pages**
+**GitHub Pages** — full walkthrough in [DEPLOY.md](DEPLOY.md)
 
 1. Create a repository (for example `shabeeb-portfolio`) and push this folder to it.
 2. In the repository settings, open **Pages** and set the source to the `main` branch, root folder.
